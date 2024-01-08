@@ -1,0 +1,35 @@
+<div class="Layout">
+  <div class="Layout-sidebar">
+    <div class="CallsTree Layout-callsTree">
+      <div class="CallsTree-searchBar">
+        <nz-input-group nzSuffixIcon="search">
+          <input [formControl]="search" type="search" nz-input placeholder="Enter function name">
+        </nz-input-group>
+      </div>
+
+      <div #treeWrap class="CallsTree-treeWrap">
+        <nz-tree
+          #tree
+          class="CallsTree-tree"
+          (nzCheckBoxChange)="renderDotFromCheckedNodes($event.checkedKeys)"
+          (nzExpandChange)="expandNodeAndRerender($event)"
+          [nzData]="nodes$ | async"
+          [nzSearchValue]="searchTerm$ | async"
+          nzCheckable
+          nzExpandAll
+          [nzVirtualItemSize]="28"
+        ></nz-tree>
+      </div>
+    </div>
+  </div>
+  <div class="Layout-content">
+    <div class="Page">
+      <div class="Page-header">
+        <h1 class="Page-title">Call tree</h1>
+      </div>
+      <div class="Page-content">
+        <app-simple-visualizer *ngIf="dotStr$ | async as dotStr" [dotStr]="dotStr"></app-simple-visualizer>
+      </div>
+    </div>
+  </div>
+</div>
